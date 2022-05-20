@@ -1,19 +1,22 @@
 const express = require('express')
-const app = express()
-
 const mongoose = require('mongoose')
-const d = require('mongoose')
+
+require('dotenv').config()
+const PORT = process.env.PORT || 3000,
+    MONGO_URI = process.env.MONGO_URI
+
+const app = express()
 
 async function start(){
     try {
-        await mongoose.connect('mongodb://localhost:27017/mytestdb', {
+        await mongoose.connect(MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
         console.log('db connected')
 
-        app.listen(3000, () => {
-            console.log('server started on port 3000')
+        app.listen(PORT, () => {
+            console.log(`server started on port ${PORT}`)
         }
 )
     } catch (e) {
