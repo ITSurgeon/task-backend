@@ -7,7 +7,10 @@ const PORT = process.env.PORT || 3000,
 
 const app = express()
 
-async function start(){
+app.use(express.json())
+app.use('/api/auth', require('./routes/auth.routes'))
+
+async function start() {
     try {
         await mongoose.connect(MONGO_URI, {
             useNewUrlParser: true,
@@ -16,9 +19,9 @@ async function start(){
         console.log('db connected')
 
         app.listen(PORT, () => {
-            console.log(`server started on port ${PORT}`)
-        }
-)
+                console.log(`server started on port ${PORT}`)
+            }
+        )
     } catch (e) {
         console.log('error: ', e.message)
         process.exit(1)
