@@ -17,28 +17,29 @@ Content-Type: application/json
 
 ##########################################
 
-POST http://localhost:3000/api/post/write
+POST http://localhost:3000/api/comment/write
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5ZmUyNDA1OWFlNzBiMzNkODZmZTMiLCJpYXQiOjE2NTMzMDQ4NjAsImV4cCI6MTY1MzMxNTY2MH0.knhIc5buBK2MiiIOq4BoMO4kftITYz_JDbK9iji_C1E
+Authorization: Bearer {{auth_token}}
 
 {
-  "content": "some_content_6"
+  "content": "some_comment_1",
+  "postId": "628b6f038b43f97cdd8ff163"
 }
 
 ##########################################
 
-GET http://localhost:3000/api/post/
+GET http://localhost:3000/api/comment/own
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 ##########################################
 
-GET http://localhost:3000/api/post/{{post_id}}
+GET http://localhost:3000/api/comment/post/{{post_id}}
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 ##########################################
 
-GET http://localhost:3000/api/post/author/{{user_id}}
+GET http://localhost:3000/api/comment/author/{{user_id}}
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
