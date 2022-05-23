@@ -106,6 +106,3 @@ dist
 # Jetbrains products directory
 .idea
 
-# Jetbrains dev/test http requests
-*.http
-/HTTP test requests/

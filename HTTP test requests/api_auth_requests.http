@@ -1,0 +1,43 @@
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "login": "login_1",
+  "password": "some_password"
+}
+
+#################################################
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "login": "login_2",
+  "password": "some_password"
+}
+
+#################################################
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "login": "login_1",
+  "password": "some_password"
+}
+
+#################################################
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "login": "login_1",
+  "password": "another_password"
+}
+
+#################################################
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "login": "login_2",
+  "password": "some_password"
+}

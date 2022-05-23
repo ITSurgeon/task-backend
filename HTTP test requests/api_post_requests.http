@@ -1,0 +1,37 @@
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "login": "login_1",
+  "password": "some_password"
+}
+
+##########################################
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "login": "login_1",
+  "password": "some_password"
+}
+
+##########################################
+
+POST http://localhost:3000/api/post/write
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+{
+  "content": "some_content_5"
+}
+
+##########################################
+
+GET http://localhost:3000/api/post/
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+##########################################
+
+GET http://localhost:3000/api/post/628ae010606a35998f7ad5cd
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
