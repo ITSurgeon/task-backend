@@ -18,7 +18,8 @@ router.post('/write', auth, async (req, res) => {
         res.status(500).json({message: e.message})
     }
 })
-router.get('/', auth, async (req, res) => {
+
+router.get('/',  async (req, res) => {
     try {
         const posts = await Post.find()
         res.json(posts)

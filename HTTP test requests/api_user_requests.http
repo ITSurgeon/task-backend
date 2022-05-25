@@ -27,18 +27,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5Z
 
 ##########################################
 
-GET http://localhost:3000/api/post/
+GET http://localhost:3000/api/user/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5ZmUyNDA1OWFlNzBiMzNkODZmZTMiLCJpYXQiOjE2NTM0MzQzMjksImV4cCI6MTY1MzQ0NTEyOX0.LGSciBkcP58AlzPAGD3T_xiXqnPTWxDq9Gdgv78aU4M
+
+##########################################
+
+GET http://localhost:3000/api/user/6289fe8c059ae70b33d86fe7
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5ZmUyNDA1OWFlNzBiMzNkODZmZTMiLCJpYXQiOjE2NTM0MzQzMjksImV4cCI6MTY1MzQ0NTEyOX0.LGSciBkcP58AlzPAGD3T_xiXqnPTWxDq9Gdgv78aU4M
+
+##########################################
+
+GET http://localhost:3000/api/post/author/{{user_id}}
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
-
-##########################################
-
-GET http://localhost:3000/api/post/628ae33a606a35998f7ad5d9
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5ZmUyNDA1OWFlNzBiMzNkODZmZTMiLCJpYXQiOjE2NTM0MzQzMjksImV4cCI6MTY1MzQ0NTEyOX0.LGSciBkcP58AlzPAGD3T_xiXqnPTWxDq9Gdgv78aU4M
-
-##########################################
-
-GET http://localhost:3000/api/post/author/6289fe8c059ae70b33d86fe7
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5ZmUyNDA1OWFlNzBiMzNkODZmZTMiLCJpYXQiOjE2NTM0MzQzMjksImV4cCI6MTY1MzQ0NTEyOX0.LGSciBkcP58AlzPAGD3T_xiXqnPTWxDq9Gdgv78aU4M

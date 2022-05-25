@@ -5,7 +5,8 @@ const schema = new Schema({
     password: {type: String, required: true},
     posts: [{type: Types.ObjectId, ref: 'Post'}],
     comments: [{type: Types.ObjectId, ref: 'Comment'}],
-    invites: [{type: Types.ObjectId, ref: 'Invite'}],
+    invitationsTo: [{type: Types.ObjectId, ref: 'User'}],
+    invitationsFrom: [{type: Types.ObjectId, ref: 'User'}],
     friends: [{type: Types.ObjectId, ref: 'User'}]
 })
 
