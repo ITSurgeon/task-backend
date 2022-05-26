@@ -1,44 +1,35 @@
-POST http://localhost:3000/api/auth/register
+POST {{URL}}/api/posts
 Content-Type: application/json
+Authorization: Bearer {{auth_token}}
 
 {
-  "login": "login_1",
-  "password": "some_password"
-}
-
-##########################################
-POST http://localhost:3000/api/auth/login
-Content-Type: application/json
-
-{
-  "login": "login_1",
-  "password": "some_password"
+  "content": "some_post_content_7"
 }
 
 ##########################################
 
-POST http://localhost:3000/api/post/write
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5ZmUyNDA1OWFlNzBiMzNkODZmZTMiLCJpYXQiOjE2NTMzMDQ4NjAsImV4cCI6MTY1MzMxNTY2MH0.knhIc5buBK2MiiIOq4BoMO4kftITYz_JDbK9iji_C1E
-
-{
-  "content": "some_content_6"
-}
-
-##########################################
-
-GET http://localhost:3000/api/post/
+GET {{URL}}/api/posts/
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 ##########################################
 
-GET http://localhost:3000/api/post/628ae33a606a35998f7ad5d9
+GET {{URL}}/api/posts/{{postId}}
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5ZmUyNDA1OWFlNzBiMzNkODZmZTMiLCJpYXQiOjE2NTM0MzQzMjksImV4cCI6MTY1MzQ0NTEyOX0.LGSciBkcP58AlzPAGD3T_xiXqnPTWxDq9Gdgv78aU4M
+Authorization: Bearer {{auth_token}}
 
 ##########################################
 
-GET http://localhost:3000/api/post/author/6289fe8c059ae70b33d86fe7
+GET {{URL}}/api/posts/{{postId}}/comments
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5ZmUyNDA1OWFlNzBiMzNkODZmZTMiLCJpYXQiOjE2NTM0MzQzMjksImV4cCI6MTY1MzQ0NTEyOX0.LGSciBkcP58AlzPAGD3T_xiXqnPTWxDq9Gdgv78aU4M
+Authorization: Bearer {{auth_token}}
+
+##########################################
+
+POST {{URL}}/api/posts/{{postId}}/comments
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "content": "some_post_comment_7"
+}

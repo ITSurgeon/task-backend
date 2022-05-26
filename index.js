@@ -9,9 +9,9 @@ const app = express()
 
 app.use(express.json())
 app.use('/api/auth', require('./routes/auth.routes'))
-app.use('/api/user', require('./routes/user.routes'))
-app.use('/api/post', require('./routes/post.routes'))
-app.use('/api/comment', require('./routes/comment.routes'))
+app.use('/api/users', require('./routes/users.routes'))
+app.use('/api/posts', require('./routes/posts.routes'))
+app.use('/api/comments', require('./routes/comments.routes'))
 
 async function start() {
     try {

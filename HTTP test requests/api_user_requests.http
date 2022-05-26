@@ -1,44 +1,38 @@
-POST http://localhost:3000/api/auth/register
+GET {{URL}}/api/users/
 Content-Type: application/json
-
-{
-  "login": "login_1",
-  "password": "some_password"
-}
-
-##########################################
-POST http://localhost:3000/api/auth/login
-Content-Type: application/json
-
-{
-  "login": "login_1",
-  "password": "some_password"
-}
+Authorization: Bearer {{auth_token}}
 
 ##########################################
 
-POST http://localhost:3000/api/post/write
+GET {{URL}}/api/users/own/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5ZmUyNDA1OWFlNzBiMzNkODZmZTMiLCJpYXQiOjE2NTMzMDQ4NjAsImV4cCI6MTY1MzMxNTY2MH0.knhIc5buBK2MiiIOq4BoMO4kftITYz_JDbK9iji_C1E
-
-{
-  "content": "some_content_6"
-}
+Authorization: Bearer {{auth_token}}
 
 ##########################################
 
-GET http://localhost:3000/api/user/
+GET {{URL}}/api/users/{{otherUserId}}
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5ZmUyNDA1OWFlNzBiMzNkODZmZTMiLCJpYXQiOjE2NTM0MzQzMjksImV4cCI6MTY1MzQ0NTEyOX0.LGSciBkcP58AlzPAGD3T_xiXqnPTWxDq9Gdgv78aU4M
+Authorization: Bearer {{auth_token}}
 
 ##########################################
 
-GET http://localhost:3000/api/user/6289fe8c059ae70b33d86fe7
+PUT {{URL}}/api/users/{{otherUserId}}/invite
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Mjg5ZmUyNDA1OWFlNzBiMzNkODZmZTMiLCJpYXQiOjE2NTM0MzQzMjksImV4cCI6MTY1MzQ0NTEyOX0.LGSciBkcP58AlzPAGD3T_xiXqnPTWxDq9Gdgv78aU4M
+Authorization: Bearer {{auth_token}}
+##########################################
+
+PUT {{URL}}/api/users/{{userId}}/approve
+Content-Type: application/json
+Authorization: Bearer {{other_auth_token}}
 
 ##########################################
 
-GET http://localhost:3000/api/post/author/{{user_id}}
+GET {{URL}}/api/users/{{otherUserId}}/posts
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+##########################################
+
+GET {{URL}}/api/users/{{otherUserId}}/comments
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
