@@ -1,45 +1,26 @@
-POST http://localhost:3000/api/auth/register
+GET {{URL}}/api/comments
 Content-Type: application/json
-
-{
-  "login": "login_1",
-  "password": "some_password"
-}
-
-##########################################
-POST http://localhost:3000/api/auth/login
-Content-Type: application/json
-
-{
-  "login": "login_1",
-  "password": "some_password"
-}
+Authorization: Bearer {{auth_token}}
 
 ##########################################
 
-POST http://localhost:3000/api/comment/write
+GET {{URL}}/api/comments/{{commentId}}
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+##########################################
+PUT {{URL}}/api/comments/{{commentId}}
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 {
-  "content": "some_comment_1",
-  "postId": "628b6f038b43f97cdd8ff163"
+  "content": "changed_content_1"
 }
 
 ##########################################
 
-GET http://localhost:3000/api/comment/own
+DELETE {{URL}}/api/comments/{{commentId}}
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 ##########################################
-
-GET http://localhost:3000/api/comment/post/{{post_id}}
-Content-Type: application/json
-Authorization: Bearer {{auth_token}}
-
-##########################################
-
-GET http://localhost:3000/api/comment/author/{{user_id}}
-Content-Type: application/json
-Authorization: Bearer {{auth_token}}

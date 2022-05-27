@@ -107,13 +107,11 @@ router.put('/:id/approve', auth, async (req, res) => {
         const userInviting = await User.findById(req.params.id),
             userApproving = await User.findById(req.user.userId)
 
-        if (!userApproving.friends.includes( userInviting.id)) {
+        if (!userApproving.friends.includes(userInviting.id)) {
 
-            await userApproving.updateOne({$push: {friends: userInviting.id}})
-            await userApproving.updateOne({$pull: {invitationsFrom: userInviting.id}})
+            await userApproving.updateOne({$push: {friends: userInviting.id}}).updateOne({$pull: {invitationsFrom: userInviting.id}})
 
-            await userInviting.updateOne({$push: {friends: userApproving.id}})
-            await userInviting.updateOne({$pull: {invitationsTo: userApproving.id}})
+            await userInviting.updateOne({$push: {friends: userApproving.id}}).updateOne({$pull: {invitationsTo: userApproving.id}})
 
             res.status(201).json({message: `User ${userInviting.login} successfully added to friends`})
 
