@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const path = require('path');
 
 require('dotenv').config()
 const PORT = process.env.PORT || 3000,
@@ -20,7 +21,11 @@ async function start() {
             useUnifiedTopology: true,
         })
         console.log('db connected')
+ app.use(express.static('documentation'));
 
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'documentation', 'index.html'));
+  });
         app.listen(PORT, () => {
                 console.log(`server started on port ${PORT}`)
             }
