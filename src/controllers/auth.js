@@ -1,40 +1,39 @@
-const {Router} = require('express')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-
-const User = require('../models/User')
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 require('dotenv').config()
 const JWT_SECRET = process.env.JWT_SECRET || "testsecret"
 
-const router = Router()
+const {
+    getUserByLogin,
+    createUser
+} = require('../services/user')
 
-router.post('/register', async (req, res) => {
+const register = async (req, res) => {
     try {
         const {login, password} = req.body
 
-        const exists = await User.findOne({login})
+        const exists = await getUserByLogin(login)
         if (exists) {
             return res.status(400).json({message: `User ${login} is already registered`})
         }
 
         const hashedPassword = await bcrypt.hash(password, 12)
 
-        const user = new User({login, password: hashedPassword})
+        const user = await createUser(login, hashedPassword)
 
-        await user.save()
-        res.status(201).json({message: `User ${login} successfully registered, please log in`})
+        res.status(201).json({message: `User ${user.login} successfully registered, please log in`})
 
     } catch (e) {
         res.status(500).json({message: e.message})
     }
-})
+}
 
-router.post('/login', async (req, res) => {
+const login = async (req, res) => {
     try {
         const {login, password} = req.body
 
-        const user = await User.findOne({login})
+        const user = await getUserByLogin(login)
         if (!user) {
             return res.status(400).json({message: `User ${login} not found`})
         }
@@ -61,6 +60,9 @@ router.post('/login', async (req, res) => {
         res.status(500).json({message: e.message})
     }
 
-})
+}
 
-module.exports = router
+module.exports = {
+    register,
+    login
+}

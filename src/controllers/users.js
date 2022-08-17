@@ -1,18 +1,11 @@
-const {Router} = require('express')
+const userService = require('../services/user')
+const postService = require('../services/post')
+const commentService = require('../services/comment')
 
-const User = require("../models/User")
-const Post = require("../models/Post")
-const Comment = require("../models/Comment")
-
-const auth = require("../middlewares/auth.middleware")
-const {model} = require("mongoose");
-
-const router = Router()
-
-router.get('/', auth, async (req, res) => {
+const getAllUsers = async (req, res) => {
     try {
         let response = []
-        const users = await User.find()
+        const users = await userService.getAllUsers()
         users.forEach(user => {
             response.push({login: user.login, userId: user.id})
         })
@@ -20,14 +13,14 @@ router.get('/', auth, async (req, res) => {
     } catch (e) {
         res.status(500).json({message: e.message})
     }
-})
+}
 
-router.get('/:id', auth, async (req, res) => {
+const getUser = async (req, res) => {
     try {
         const id = req.params.id
         const friends = []
 
-        const user = await User.findById(id).populate('friends')
+        const user = await userService.getUserById(id)
         user.friends.forEach(user => {
             friends.push({login: user.login, userId: user.id})
         })
@@ -37,13 +30,12 @@ router.get('/:id', auth, async (req, res) => {
     } catch (e) {
         res.status(500).json({message: e.message})
     }
-})
+}
 
-router.get('/own/profile', auth, async (req, res) => {
+const getOwnProfile = async (req, res) => {
     try {
-        const id = req.user.userId
-        const user = await User.findById(id).populate('friends').populate('invitationsTo').populate('invitationsFrom')
-
+        const {userId} = req.user
+        const user = await userService.getOwnProfile(userId)
         const friends = []
         user.friends.forEach(user => {
             friends.push({login: user.login, userId: user.id})
@@ -59,8 +51,8 @@ router.get('/own/profile', auth, async (req, res) => {
             invitationsTo.push({login: user.login, userId: user.id})
         })
 
-        const posts = await Post.find({userId: id})
-        const comments = await Comment.find({userId: id})
+        const posts = await postService.getUserPosts(userId)
+        const comments = await commentService.getUserComments(userId)
 
         const response = {login: user.login, userId: user.id, friends, invitationsTo, invitationsFrom, posts, comments}
 
@@ -69,20 +61,18 @@ router.get('/own/profile', auth, async (req, res) => {
     } catch (e) {
         res.status(500).json({message: e.message})
     }
-})
+}
 
-router.put('/:id/invite', auth, async (req, res) => {
+const inviteUser = async (req, res) => {
     if (req.params.id !== req.user.userId) {
         try {
-            const userInvited = await User.findById(req.params.id),
-                userInviting = await User.findById(req.user.userId)
+            const userInvited = await userService.getUserById(req.params.id),
+                userInviting = await userService.getUserById(req.user.userId)
 
             if (!userInviting.friends.includes(req.params.id)) {
                 if (!userInviting.invitationsTo.includes(req.params.id)) {
 
-                    await userInvited.updateOne({$push: {invitationsFrom: req.user.userId}})
-                    await userInviting.updateOne({$push: {invitationsTo: req.params.id}})
-
+                    await userService.inviteUser(userInviting.id, userInvited.id)
                     res.status(201).json({message: `User ${userInvited.login} successfully invited`})
 
                 } else {
@@ -100,19 +90,16 @@ router.put('/:id/invite', auth, async (req, res) => {
     } else {
         res.status(403).json({message: "You can't invite yourself"})
     }
-})
+}
 
-router.put('/:id/approve', auth, async (req, res) => {
+const approveUser = async (req, res) => {
     try {
-        const userInviting = await User.findById(req.params.id),
-            userApproving = await User.findById(req.user.userId)
+        const userInviting = await userService.getUserById(req.params.id),
+            userApproving = await userService.getUserById(req.user.userId)
 
         if (!userApproving.friends.includes(userInviting.id)) {
 
-            await userApproving.updateOne({$push: {friends: userInviting.id}}).updateOne({$pull: {invitationsFrom: userInviting.id}})
-
-            await userInviting.updateOne({$push: {friends: userApproving.id}}).updateOne({$pull: {invitationsTo: userApproving.id}})
-
+            await userService.approveUser(userApproving.id, userInviting.id)
             res.status(201).json({message: `User ${userInviting.login} successfully added to friends`})
 
         } else {
@@ -123,24 +110,32 @@ router.put('/:id/approve', auth, async (req, res) => {
         res.status(500).json({message: e.message})
     }
 
-})
+}
 
-router.get('/:id/posts', auth, async (req, res) => {
+const getUserPosts = async (req, res) => {
     try {
-        const posts = await Post.find({userId: req.params.id})
+        const posts = await postService.getUserPosts(req.params.id)
         res.json(posts)
     } catch (e) {
         res.status(500).json({message: e.message})
     }
-})
+}
 
-router.get('/:id/comments', auth, async (req, res) => {
+const getUserComments = async (req, res) => {
     try {
-        const comments = await Comment.find({userId: req.params.id})
+        const comments = await commentService.getUserComments(req.params.id)
         res.json(comments)
     } catch (e) {
         res.status(500).json({message: e.message})
     }
-})
+}
 
-module.exports = router
+module.exports = {
+    getAllUsers,
+    getUser,
+    getOwnProfile,
+    inviteUser,
+    approveUser,
+    getUserPosts,
+    getUserComments
+}

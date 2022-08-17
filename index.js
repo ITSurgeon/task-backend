@@ -9,10 +9,10 @@ const PORT = process.env.PORT || 3000,
 const app = express()
 
 app.use(express.json())
-app.use('/api/auth', require('./routes/auth.routes'))
-app.use('/api/users', require('./routes/users.routes'))
-app.use('/api/posts', require('./routes/posts.routes'))
-app.use('/api/comments', require('./routes/comments.routes'))
+app.use('/api/auth', require('./src/routes/auth'))
+app.use('/api/users', require('./src/routes/users'))
+app.use('/api/posts', require('./src/routes/posts'))
+app.use('/api/comments', require('./src/routes/comments'))
 
 async function start() {
     try {
