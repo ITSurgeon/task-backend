@@ -11,8 +11,8 @@ module.exports = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1]
 
-        if (!token) {
-            return res.status(401).json({message: 'User unauthorized'})
+        if ( ! token) {
+            return res.status(401).json({ message: 'User unauthorized' })
         }
 
         const verified = jwt.verify(token, JWT_SECRET)
@@ -20,6 +20,6 @@ module.exports = (req, res, next) => {
         next()
 
     } catch (e) {
-        return res.status(401).json({message: 'User unauthorized'})
+        return res.status(401).json({ message: 'User unauthorized' })
     }
 }

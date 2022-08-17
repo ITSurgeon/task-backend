@@ -7,11 +7,11 @@ const getAllUsers = async (req, res) => {
         let response = []
         const users = await userService.getAllUsers()
         users.forEach(user => {
-            response.push({login: user.login, userId: user.id})
+            response.push({ login: user.login, userId: user.id })
         })
         res.json(response)
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
@@ -22,44 +22,52 @@ const getUser = async (req, res) => {
 
         const user = await userService.getUserById(id)
         user.friends.forEach(user => {
-            friends.push({login: user.login, userId: user.id})
+            friends.push({ login: user.login, userId: user.id })
         })
 
-        const response = {login: user.login, userId: user.id, friends}
+        const response = { login: user.login, userId: user.id, friends }
         res.json(response)
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
 const getOwnProfile = async (req, res) => {
     try {
-        const {userId} = req.user
+        const { userId } = req.user
         const user = await userService.getOwnProfile(userId)
         const friends = []
         user.friends.forEach(user => {
-            friends.push({login: user.login, userId: user.id})
+            friends.push({ login: user.login, userId: user.id })
         })
 
         const invitationsFrom = []
         user.invitationsFrom.forEach(user => {
-            invitationsFrom.push({login: user.login, userId: user.id})
+            invitationsFrom.push({ login: user.login, userId: user.id })
         })
 
         const invitationsTo = []
         user.invitationsTo.forEach(user => {
-            invitationsTo.push({login: user.login, userId: user.id})
+            invitationsTo.push({ login: user.login, userId: user.id })
         })
 
         const posts = await postService.getUserPosts(userId)
         const comments = await commentService.getUserComments(userId)
 
-        const response = {login: user.login, userId: user.id, friends, invitationsTo, invitationsFrom, posts, comments}
+        const response = {
+            login: user.login,
+            userId: user.id,
+            friends,
+            invitationsTo,
+            invitationsFrom,
+            posts,
+            comments
+        }
 
         res.json((response))
 
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
@@ -69,27 +77,25 @@ const inviteUser = async (req, res) => {
             const userInvited = await userService.getUserById(req.params.id),
                 userInviting = await userService.getUserById(req.user.userId)
 
-            if (!userInviting.friends.includes(req.params.id)) {
-                if (!userInviting.invitationsTo.includes(req.params.id)) {
+            if ( ! userInviting.friends.includes(req.params.id)) {
+                if ( ! userInviting.invitationsTo.includes(req.params.id)) {
 
                     await userService.inviteUser(userInviting.id, userInvited.id)
-                    res.status(201).json({message: `User ${userInvited.login} successfully invited`})
+                    res.status(201).json({ message: `User ${ userInvited.login } successfully invited` })
 
-                } else {
-                    res.status(403).json({message: `You have already invited user ${userInvited.login}`})
                 }
+                return res.status(403).json({ message: `You have already invited user ${ userInvited.login }` })
 
-            } else {
-                res.status(403).json({message: `User ${userInvited.login} is already in your friends list`})
             }
+            return res.status(403).json({ message: `User ${ userInvited.login } is already in your friends list` })
 
         } catch (e) {
-            res.status(500).json({message: e.message})
+            res.status(500).json({ message: e.message })
         }
 
-    } else {
-        res.status(403).json({message: "You can't invite yourself"})
     }
+    return res.status(403).json({ message: "You can't invite yourself" })
+
 }
 
 const approveUser = async (req, res) => {
@@ -97,17 +103,17 @@ const approveUser = async (req, res) => {
         const userInviting = await userService.getUserById(req.params.id),
             userApproving = await userService.getUserById(req.user.userId)
 
-        if (!userApproving.friends.includes(userInviting.id)) {
+        if ( ! userApproving.friends.includes(userInviting.id)) {
 
             await userService.approveUser(userApproving.id, userInviting.id)
-            res.status(201).json({message: `User ${userInviting.login} successfully added to friends`})
+            res.status(201).json({ message: `User ${ userInviting.login } successfully added to friends` })
 
-        } else {
-            res.status(403).json({message: `User ${userInviting.login} is allready in your friends list`})
         }
+        return res.status(403).json({ message: `User ${ userInviting.login } is allready in your friends list` })
+
 
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 
 }
@@ -117,7 +123,7 @@ const getUserPosts = async (req, res) => {
         const posts = await postService.getUserPosts(req.params.id)
         res.json(posts)
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
@@ -126,7 +132,7 @@ const getUserComments = async (req, res) => {
         const comments = await commentService.getUserComments(req.params.id)
         res.json(comments)
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 

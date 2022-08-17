@@ -2,7 +2,7 @@ const Post = require("../models/Post");
 
 const getUserPosts = async function (userId) {
     try {
-        return await Post.find({userId})
+        return await Post.find({ userId })
     } catch (e) {
         throw Error('Connection to DB failed')
     }
@@ -10,7 +10,7 @@ const getUserPosts = async function (userId) {
 
 const getPost = async function (postId) {
     try {
-        return await Post.findById({postId})
+        return await Post.findById({ postId })
     } catch (e) {
         throw Error('Connection to DB failed')
     }
@@ -23,12 +23,12 @@ const updatePost = async function (postId, userId, content) {
         if (post.userId === userId) {
             post.content = content
             await post.save()
-            return ({status: 201, message: "Post successfully updated"})
-        } else {
-            return ({status: 403, message: "It's not your Post!"})
+            return ({ status: 201, message: "Post successfully updated" })
         }
+        return ({ status: 403, message: "It's not your Post!" })
+
     } catch (e) {
-        return ({status: 500, message: e.message})
+        return ({ status: 500, message: e.message })
     }
 }
 
@@ -38,17 +38,17 @@ const deletePost = async function (postId, userId) {
 
         if (post.userId === userId) {
             await Post.findByIdAndDelete(postId)
-            return ({status: 200, message: "Post successfully deleted"})
-        } else {
-            return ({status: 403, message: "It's not your post!"})
+            return ({ status: 200, message: "Post successfully deleted" })
         }
+        return ({ status: 403, message: "It's not your post!" })
+
     } catch (e) {
-        return ({status: 500, message: e.message})
+        return ({ status: 500, message: e.message })
     }
 }
 
 const createPost = async function (userId, content) {
-    const post = new Post({userId, content})
+    const post = new Post({ userId, content })
     await post.save()
     return post
 }

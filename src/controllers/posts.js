@@ -5,7 +5,7 @@ const getAllPosts = async (req, res) => {
         const posts = await postService.getUserPosts(req.user.userId)
         res.json(posts)
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
@@ -14,7 +14,7 @@ const getPost = async (req, res) => {
         const post = await postService.getPost(req.params.id)
         res.json(post)
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
@@ -25,7 +25,7 @@ const updatePost = async (req, res) => {
         res.status(result.status).json(result.message)
 
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
@@ -36,23 +36,23 @@ const deletePost = async (req, res) => {
         res.status(result.status).json(result.message)
 
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
 const createPost = async (req, res) => {
     try {
-        const {content} = req.body
+        const { content } = req.body
 
         const comment = await postService.createPost(
             req.user.userId,
             content)
 
-        res.status(201).json({post})
+        res.status(201).json({ post })
 
     } catch
         (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 

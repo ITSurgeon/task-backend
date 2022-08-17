@@ -35,7 +35,7 @@ const getOwnProfile = async function (id) {
 
 const createUser = async function (login, password) {
     try {
-        const user = new User({login, password})
+        const user = new User({ login, password })
         await user.save()
         return user
     } catch (e) {
@@ -45,8 +45,8 @@ const createUser = async function (login, password) {
 
 const inviteUser = async function (fromId, toId) {
     try {
-        await User.findById(toId).updateOne({$push: {invitationsFrom: fromId}})
-        await User.findById(fromId).updateOne({$push: {invitationsTo: toId}})
+        await User.findById(toId).updateOne({ $push: { invitationsFrom: fromId } })
+        await User.findById(fromId).updateOne({ $push: { invitationsTo: toId } })
     } catch (e) {
         throw Error('Connection to DB failed')
     }
@@ -54,8 +54,8 @@ const inviteUser = async function (fromId, toId) {
 
 const approveUser = async function (fromId, toId) {
     try {
-            await User.findById(fromId).updateOne({$push: {friends: toId}}).updateOne({$pull: {invitationsFrom: toId}})
-            await User.findById(toId).updateOne({$push: {friends: fromId}}).updateOne({$pull: {invitationsTo: fromId}})
+        await User.findById(fromId).updateOne({ $push: { friends: toId } }).updateOne({ $pull: { invitationsFrom: toId } })
+        await User.findById(toId).updateOne({ $push: { friends: fromId } }).updateOne({ $pull: { invitationsTo: fromId } })
     } catch (e) {
         throw Error('Connection to DB failed')
     }

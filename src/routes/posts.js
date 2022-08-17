@@ -1,4 +1,4 @@
-const {Router} = require('express')
+const { Router } = require('express')
 
 const auth = require('../middlewares/auth.middleware')
 
@@ -12,7 +12,7 @@ const {
     deletePost
 } = require('../controllers/posts')
 
-const {getPostComments, createPostComment} = require('../controllers/comments')
+const { getPostComments, createPostComment } = require('../controllers/comments')
 
 router.post('/', auth, createPost)
 

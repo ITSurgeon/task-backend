@@ -6,7 +6,7 @@ const getMyComments = async (req, res) => {
         res.json(comments)
 
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
@@ -15,7 +15,7 @@ const getOneComment = async (req, res) => {
         const comment = await commentService.getComment(req.params.id)
         res.json(comment)
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
@@ -26,7 +26,7 @@ const updateComment = async (req, res) => {
         res.status(result.status).json(result.message)
 
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
@@ -37,7 +37,7 @@ const deleteComment = async (req, res) => {
         res.status(result.status).json(result.message)
 
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
@@ -46,24 +46,24 @@ const getPostComments = async (req, res) => {
         const comments = await commentService.getPostComments(req.params.id)
         res.json(comments)
     } catch (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 
 const createPostComment = async (req, res) => {
     try {
-        const {content} = req.body
+        const { content } = req.body
 
         const comment = await commentService.createPostComment(
             req.user.userId,
             req.params.id,
             content)
 
-        res.status(201).json({comment})
+        res.status(201).json({ comment })
 
     } catch
         (e) {
-        res.status(500).json({message: e.message})
+        res.status(500).json({ message: e.message })
     }
 }
 

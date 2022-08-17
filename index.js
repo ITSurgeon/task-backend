@@ -21,13 +21,13 @@ async function start() {
             useUnifiedTopology: true,
         })
         console.log('db connected')
- app.use(express.static('documentation'));
+        app.use(express.static('documentation'));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'documentation', 'index.html'));
-  });
+        app.get('*', (req, res) => {
+            res.sendFile(path.resolve(__dirname, 'documentation', 'index.html'));
+        });
         app.listen(PORT, () => {
-                console.log(`server started on port ${PORT}`)
+                console.log(`server started on port ${ PORT }`)
             }
         )
     } catch (e) {
