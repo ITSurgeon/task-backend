@@ -1,33 +1,36 @@
-const { Router } = require('express')
+const { Router } = require('express');
 
-const auth = require('../middlewares/auth.middleware')
+const auth = require('../middlewares/auth.middleware');
 
-const router = Router()
+const router = Router();
 
 const {
-    createPost,
-    getAllPosts,
-    getPost,
-    updatePost,
-    deletePost
-} = require('../controllers/posts')
+  createPost,
+  getAllPosts,
+  getPost,
+  updatePost,
+  deletePost
+} = require('../controllers/posts');
 
-const { getPostComments, createPostComment } = require('../controllers/comments')
+const {
+  getPostComments,
+  createPostComment
+} = require('../controllers/comments');
 
-router.post('/', auth, createPost)
+router.post('/', auth, createPost);
 
-router.get('/', auth, getAllPosts)
+router.get('/', auth, getAllPosts);
 
-router.get('/:id', auth, getPost)
+router.get('/:id', auth, getPost);
 
-router.put('/:id', auth, updatePost)
+router.put('/:id', auth, updatePost);
 
-router.delete('/:id', auth, deletePost)
-
-
-router.get('/:id/comments', auth, getPostComments)
-
-router.post('/:id/comments', auth, createPostComment)
+router.delete('/:id', auth, deletePost);
 
 
-module.exports = router
+router.get('/:id/comments', auth, getPostComments);
+
+router.post('/:id/comments', auth, createPostComment);
+
+
+module.exports = router;
